@@ -1,0 +1,176 @@
+/**
+ * Contributor: 
+ * Alejandro Martinez, CSID: 5710018
+ * 
+ * Sources:
+ * Starting Out with Java, 6th edition, T, Gaddis
+ * http://MyProgrammingLab.com: Starting Out with Java, 6th edition
+ * 
+ * Version: 1.2
+ * 
+ *  ---CRC---
+ *  Responsibility:
+ *   -Class uses the Random class to create a 5x5 array that will hold
+ *    exactly 5 treasures, 5 troll buttons, and the rest will be blank
+ *    buttons.
+ *  Collaboration:
+ *   -Random class.
+ *   
+ *  Responsibilities:
+ *   -Will keep creating 5x5 arrays with specified numbers required until 
+ *    requirements are satisfied.
+ *   -Once 5x5 arrays are created, method will build a 10x10 array with
+ *    4 5x5 arrays of JButtons with specific names to differentiate between
+ *    them.
+ */
+import java.util.Random;
+import javax.swing.JButton;
+
+public class TreasureHuntGenerator 
+{
+	//Initialize instance of the Random class.
+	Random random;
+	
+	//Create private JButton 2D array instance with 10x10 dimensions.
+	private JButton[][] bigButtonArray = new BoardButton[10][10];
+		
+	/**
+	 * I will do my best to explain what the most important method in the project does:
+	 * The best way I found to create a random 10x10 grid of buttons with exactly 20 treasures
+	 * and 20 trolls every single time the game is ran was to use the Random class and create 5x5 arrays 
+	 * until I got an array with exactly 5 treasures and 5 trolls. (Four 5x5 arrays will be created later to 
+	 * have the required amount of treasures and trolls.) I chose a 5x5 instead of a 10x10 because it will
+	 * take many many less iterations to get a 5x5 with the requirements than the 10x10 would. (100,000+ times more.)
+	 * Once the 5x5 type int is created, another 5x5 will be created alongside it to store buttons depending on what
+	 * number the Random class created. 0 will mean there will be a BlankButton added, 1 will be a TreasureButton, and 
+	 * 2 will be a TrollButton.
+	 * Keep in mind all these steps will be repeated if the treasureCounter and trollCounter don't reach exactly 5.
+	 * @return smallButtonArray that will be called by another method to create a 10x10 array with different 5x5 arrays.
+	 */
+	public JButton[][] createSmallArray()
+	{
+		//Create JButton 2D array with 5x5 dimensions.
+		JButton[][] smallButtonArray = new JButton[5][5];
+		
+		//Create Random class instance.
+		random = new Random();
+		
+		//Create 2D integer type array that will hold be used to add and replace all the 
+		//random integers created.
+		int[][] smallArray = new int[5][5];
+		
+		int trollCounter = 0; //treasure will represent 1
+		int treasureCounter = 0; //troll will represent 2
+		boolean flag = true; //if false, do-while will stop
+
+		//Loop will iterate until the flag boolean variable is set to false.
+	    //The only way to set the flag to false is when the trollCounter and treasure counter
+		//reach exactly 5. That will mean we have found a 5x5 array that contains exactly
+		//five treasures and five trolls.
+		do
+		{
+			for(int i = 0; i < 5; i++)
+			{
+				for(int j = 0; j < 5; j++)
+				{
+					//Line that will save the random integer generated from 0-2
+					smallArray[i][j] = random.nextInt(3);
+					
+					//Create instances of the BlankButton, TreasureButton, and TrollButton class.
+					TreasureButton treasureButton = new TreasureButton("???");
+					TrollButton trollButton = new TrollButton("???");
+					BlankButton blankButton = new BlankButton("???");
+					
+					//Conditional statement that will keep track of the number of 1's, 0's and 2's.
+					//If we encounter a 1, the treasureCounter will increment by 1 and a new treasureButton 
+					//will be given a name of "1" and added to the smallButtonArray that will be later returned by
+					//this method.
+					if(smallArray[i][j] == 1)
+					{
+						treasureCounter++;
+						treasureButton.setName("1");
+						smallButtonArray[i][j] = treasureButton;
+					}
+					//If the number generated above is a 2, the trollCounter will increment by 1 and a new 
+					//trollButton will be given a name of "2" and added to the smallButtonArray.
+					else if(smallArray[i][j] == 2)
+					{
+						trollCounter++;
+						trollButton.setName("2");
+						smallButtonArray[i][j] = trollButton;
+					}
+					//If the number is not 1 or 2 then it must be 0 so a new blankButton will be given a name 
+					//of "0" and added to the smallButtonArray.
+					else
+					{
+						blankButton.setName("0");
+						smallButtonArray[i][j] = blankButton;
+					}
+				}
+			}
+			//Conditional statement will set the flag to false only if we reached 5
+			//treasures and 5 trolls in the array.
+			if(treasureCounter == 5 && trollCounter == 5)
+				flag = false;
+			//Counter variables will be set to 0 if array did not meet requirements.
+			treasureCounter = 0;
+			trollCounter = 0;
+		}while(flag);
+		
+		//Return 5x5 array.
+		return smallButtonArray;
+	}
+	
+	/**
+	 * createBigArray method will call the createSmallArray method four times to get four different
+	 * 5x5 arrays and construct a 10x10 array out of those four arrays.
+	 * This method is straight forward and will return the 10x10 array of butttons ready to be added to the 
+	 * center game panel.
+	 * @return 10x10 array of buttons to be added to the center game panel.
+	 */
+	public BoardButton[][] createBigArray()
+	{
+		JButton[][] buttons = createSmallArray();
+		for(int i = 0; i < buttons.length; i++)
+		{
+			for(int j = 0; j < buttons.length; j++)
+			{
+				//Small array will be added to the top left portion of the big array.
+				bigButtonArray[i][j] = buttons[i][j];
+			}
+		}
+		
+		buttons = createSmallArray();
+		for(int i = 0; i < buttons.length; i++)
+		{
+			for(int j = 0; j < buttons.length; j++)
+			{
+				//Small array will be added to the top right portion of the big array.
+				bigButtonArray[i][j + 5] = buttons[i][j];
+			}
+		}
+		
+		buttons = createSmallArray();
+		for(int i = 0; i < buttons.length; i++)
+		{
+			for(int j = 0; j < buttons.length; j++)
+			{
+				//Small array will be added to the bottom left portion of the big array.
+				bigButtonArray[i + 5][j] = buttons[i][j];
+			}
+		}
+		
+		buttons = createSmallArray();
+		for(int i = 0; i < buttons.length; i++)
+		{
+			for(int j = 0; j < buttons.length; j++)
+			{
+				//Small array will be added to the bottom right portion of the big array.
+				bigButtonArray[i + 5][j + 5] = buttons[i][j];
+			}
+		}
+		 
+		//return the filled 10x10 array of buttons.
+		return (BoardButton[][]) bigButtonArray;
+	}
+}
