@@ -1,0 +1,43 @@
+/**
+ * Contributor: 
+ * Alejandro Martinez, CSID: 5710018
+ * 
+ * Sources:
+ * Starting Out with Java, 6th edition, T, Gaddis
+ * http://MyProgrammingLab.com: Starting Out with Java, 6th edition
+ * 
+ * Version: 1.2
+ * 
+ *  ---CRC---
+ *  Responsibility:
+ *   -Responsible for creating a panel that will hold a label with the nam e
+ *    of the game.
+ *  Collaboration:
+ *   -extends JPanel
+ */
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class TitlePanel extends JPanel
+{
+	//Initialize JPanel reference.
+	private JPanel titlePanel;
+	
+	//Initialize JLabel reference.
+	private JLabel titleLabel;
+	
+	public TitlePanel(String titleText)
+	{
+		//Create JPanel object.
+		titlePanel = new JPanel();
+		
+		//Create JLabel object.
+		titleLabel = new JLabel(titleText);
+		
+		//Add label to panel.
+		titlePanel.add(titleLabel);
+		
+		//Add panel to content pane.
+		add(titlePanel);
+	}
+}
