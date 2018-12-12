@@ -10,34 +10,73 @@
  * 
  *  ---CRC---
  *  Responsibility:
- *   -Responsible for creating a panel that will hold a label with the nam e
- *    of the game.
+ *   -Responsible for creating the general characteristics and behavior for the 
+ *    specialized buttons.
  *  Collaboration:
- *   -extends JPanel
+ *   -extends JButton class.
+ *   
+ *  Responsibility:
+ *   -Responsible for updating the tries left and the last move form the user.
+ *  Collaboration:
+ *   -InfoPanel class.
+ *   
+ *  Responsibility:
+ *   -Responsible for updating the game board when the user runs out of 
+ *    tries.
+ *  Collaboration:
+ *   -CenterGamePanel class.
  */
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 
-public class TitlePanel extends JPanel
-{
-	//Initialize JPanel reference.
-	private JPanel titlePanel;
-	
-	//Initialize JLabel reference.
-	private JLabel titleLabel;
-	
-	public TitlePanel(String titleText)
+public class BoardButton extends JButton
+{	
+	/**
+	 * Constructor will set the default text of the BoardButtons
+	 * and add an action listener that will update the number of tries left,
+	 * will update the moves made, and will show all buttons once all tries 
+	 * have been depleted by user.
+	 */
+	public BoardButton()
 	{
-		//Create JPanel object.
-		titlePanel = new JPanel();
-		
-		//Create JLabel object.
-		titleLabel = new JLabel(titleText);
-		
-		//Add label to panel.
-		titlePanel.add(titleLabel);
-		
-		//Add panel to content pane.
-		add(titlePanel);
+		setText("???");
+		addActionListener(new BoardButtonListener());
+	}
+	
+	private class BoardButtonListener implements ActionListener
+	{
+		/**
+		 * actionPerformed method will disable the button, update the triesLeft counter,
+		 * and execute a conditional statement that will display all buttons once the game
+		 * ends.
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) 
+		{
+			//Line will disable the button.
+			setEnabled(false);
+			
+			//Static call to update the tries left.
+			InfoPanel.updateTriesLeft();
+			
+			//Conditional statement that will execute only if the tries left are 0
+			if(InfoPanel.getTriesLeft() < 1)
+			{
+				//Conditional statement that will let the user know if they won
+				//the game or not based on the number of treasures left on the 
+				//screen when the game ends.
+				if(InfoPanel.getTreasuresLeft() < 1)
+					//index 2 will contain the "You won" string.
+					InfoPanel.updateMove(2);
+				else
+					//Index 3 will contain the "You lost" string.
+					InfoPanel.updateMove(3);
+				
+				//Line will call the showButtons method that will display all buttons in the panel
+				//once the game ends.
+				CenterGamePanel.showButtons();
+			}
+		}
 	}
 }
