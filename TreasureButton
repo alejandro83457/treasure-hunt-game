@@ -10,34 +10,64 @@
  * 
  *  ---CRC---
  *  Responsibility:
- *   -Responsible for creating a panel that will hold a label with the nam e
- *    of the game.
+ *   -Responsible for creating a child class of the BoardButton class.
+ *   -Responsible for everything the BoardButton class does.
  *  Collaboration:
- *   -extends JPanel
+ *   -extends BoardButton.
+ *  
+ *  Responsibility:
+ *   -Responsible for setting the text of the button clicked.
+ *  Collaboration:
+ *   -implements ActionListener
+ *   
+ *  Responsibility:
+ *   -Responsible for updating the treasures left and found.
+ *  Collaboration:
+ *   -InfoPanel class.
+ *   
+ *  Responsibility:
+ *   -Responsible for updating the user's move that is displayed on the 
+ *    info panel.
+ *  Collaboration:
+ *   -InfoPanel class.
  */
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class TitlePanel extends JPanel
+public class TreasureButton extends BoardButton 
 {
-	//Initialize JPanel reference.
-	private JPanel titlePanel;
-	
-	//Initialize JLabel reference.
-	private JLabel titleLabel;
-	
-	public TitlePanel(String titleText)
+	/**
+	 * Constructor will call the superclass constructor and will set the
+	 * text of the button.
+	 * It will also add an extra actionListener to this child class that will
+	 * set a specific text, update the treasure count, and update the move displayed 
+	 * in the info panel.
+	 * @param text Is the text that will be displayed on the button once it's called.
+	 */
+	public TreasureButton(String text)
 	{
-		//Create JPanel object.
-		titlePanel = new JPanel();
+		//Required line to call the superclass constructor first.
+		super();
 		
-		//Create JLabel object.
-		titleLabel = new JLabel(titleText);
+		//Sets the text of the button.
+		setText(text);
 		
-		//Add label to panel.
-		titlePanel.add(titleLabel);
-		
-		//Add panel to content pane.
-		add(titlePanel);
+		//Add action listener to button.
+		addActionListener(new TreasureButtonListener());
+	}
+	
+	private class TreasureButtonListener implements ActionListener
+	{
+		/**
+		 * actionPerformed method will set the text of the button, will update the amount of treasures left and 
+		 * amount of treasures obtained, and will udpate the last move of the user in the info panel.
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) 
+		{
+			setText("$$$");
+			InfoPanel.updateTreasure();
+			InfoPanel.updateMove(0);
+		}
 	}
 }
