@@ -1,0 +1,95 @@
+/**
+ * Contributor: 
+ * Alejandro Martinez, CSID: 5710018
+ * 
+ * Sources:
+ * Starting Out with Java, 6th edition, T, Gaddis
+ * http://MyProgrammingLab.com: Starting Out with Java, 6th edition
+ * 
+ * Version: 1.2
+ * 
+ *  ---CRC---
+ *  Responsibilities:
+ *  -Responsible for the height and length of the game frame.
+ *  -Responsible for the number of tries the user has.
+ *  -Responsible for the number of treasures that will be initially displayed.
+ *  -Responsible for the title of the game.
+ */
+public class GameSettings 
+{
+	/*
+	 * This class will contain all of the game's settings.
+	 */
+	
+	//Final value of the width of the frame.
+	private final int JFRAME_WIDTH = 600;
+	
+	//Final value for the height of the frame.
+	private final int JFRAME_HEIGHT = 400;
+	
+	//Final value for the number of tries the user has.
+	private final int NUMBER_OF_TRIES = 50;
+	
+	//Final value for the number of treasures the game has.
+	private final int NUMBER_OF_TREASURES = 20;
+	
+	//Final value for the number of trolls the game has.
+	private final int NUMBER_OF_TROLLS = 20;
+	
+	//Final value for the name of the game.
+	private final String NAME_OF_GAME = "Treasure Hunt Game";
+	
+	/**
+	 * getWidth method will return the width of the frame.
+	 * @return Will return the width of the frame.
+	 */
+	public int getWidth()
+	{
+		return JFRAME_WIDTH;
+	}
+	
+	/**
+	 * getHeight method will return the height of the frame.
+	 * @return Will return the height of the frame.
+	 */
+	public int getHeight()
+	{
+		return JFRAME_HEIGHT;
+	}
+	
+	/**
+	 * getNumberOfTries method will return the number of tries given to the user.
+	 * @return Will return number of tries given to user.
+	 */
+	public int getNumberOfTries()
+	{
+		return NUMBER_OF_TRIES;
+	}
+	
+	/**
+	 * getNumberOfTreasures method will return the number of treasures in the game.
+	 * @return Will return the number of treasures in the game.
+	 */
+	public int getNumberOfTreasures()
+	{
+		return NUMBER_OF_TREASURES;
+	}
+	
+	/**
+	 * getNumberOfTrolls method will return the number of trolls in the game.
+	 * @return Will return the number of trolls in the game.
+	 */
+	public int getNumberOfTrolls()
+	{
+		return NUMBER_OF_TROLLS;
+	}
+	
+	/**
+	 * getTitle method will return the name of the game.
+	 * @return Return the string representation of the game.
+	 */
+	public String getTitle()
+	{
+		return NAME_OF_GAME;
+	}
+}
