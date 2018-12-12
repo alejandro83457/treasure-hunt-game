@@ -1,0 +1,65 @@
+/**
+ * Contributor: 
+ * Alejandro Martinez, CSID: 5710018
+ * 
+ * Sources:
+ * Starting Out with Java, 6th edition, T, Gaddis
+ * http://MyProgrammingLab.com: Starting Out with Java, 6th edition
+ * 
+ * Version: 1.2
+ * 
+ *  ---CRC---
+ *  Responsibility:
+ *   -Responsible for creating a child class of the BoardButton class.
+ *   -Responsible for everything the BoardButton class does.
+ *  Collaboration:
+ *   -extends BoardButton class.
+ *   
+ *  Responsibility:
+ *   -Sets the text of the button when clicked.
+ *  Collaboration:
+ *   -implements ActionListener class.
+ *   
+ *  Responsibility:
+ *   -Updates the last move the user made displayed in the info panel.
+ *  Collaboration:
+ *   -InfoPanel class.
+ */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BlankButton extends BoardButton
+{
+	/**
+	 * Constructor will call the superclass constructor
+	 * and will set the text of the button.
+	 * It will also add an action listener.
+	 * @param text Used to set the text of the button.
+	 */
+	public BlankButton(String text)
+	{
+		//Line required when extending a class to 
+		//call its constructor before the subclass constructor.
+		super();
+		
+		//Sets the text of the button depending on the constructor argument.
+		setText(text);
+		
+		//Adds an action listener to the button.
+		addActionListener(new BlankButtonListener());
+	}
+	
+	private class BlankButtonListener implements ActionListener
+	{
+		/**
+		 * actionPerformed method will set the text of the button and
+		 * will update the last move of the user in the info panel.
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) 
+		{
+			setText("   ");
+			InfoPanel.updateMove(1);
+		}
+	}
+}
