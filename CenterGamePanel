@@ -1,0 +1,107 @@
+/**
+ * Contributor: 
+ * Alejandro Martinez, CSID: 5710018
+ * 
+ * Sources:
+ * Starting Out with Java, 6th edition, T, Gaddis
+ * http://MyProgrammingLab.com: Starting Out with Java, 6th edition
+ * 
+ * Version: 1.2
+ * 
+ * ---CRC---
+ * Responsibility:
+ *  -Displays the actual game with its buttons.
+ * Collaboration:
+ *  -TreasureHuntGenerator class.
+ *  
+ * Responsibility:
+ *  -Creates panel that will hold playing area.
+ *  -Updates buttons array to display all buttons when game ends.
+ */
+import java.awt.GridLayout;
+import javax.swing.JPanel;
+
+public class CenterGamePanel extends JPanel
+{
+	//Create private static instance of JPanel class.
+	static JPanel centerPanel;
+	
+	//Create instance of TreasureHuntGenerator class.
+	TreasureHuntGenerator treasureHuntGenerator;
+	
+	 //Create 2D array of BoardButton objects.
+	static BoardButton[][] boardButtons;
+	
+	/**
+	 * Constructor will create the center game panel and will add the buttons for the game.
+	 * It will also set the layout of the panel, and will add the panel to the content pane.
+	 */
+	public CenterGamePanel()
+	{
+		//Create instance of the JPanel class.
+		centerPanel = new JPanel();
+		
+		//Create instance of the TreasureHuntGenerator class.
+		treasureHuntGenerator = new TreasureHuntGenerator();
+		
+		//Using the instance of the TreasureGenerator class, createBigArray method will be called
+		//that will return a generated 10x10 array of buttons ready to be added to the panel.
+		boardButtons = treasureHuntGenerator.createBigArray();
+		
+		//Sets the layout of the panel to add the buttons in each cell.
+		centerPanel.setLayout(new GridLayout(10, 10));
+		
+		//Calls method to add the buttons to the panel.
+		addButtons();
+		
+		//Adds the panel to the content pane.
+		add(centerPanel);
+	}
+	/**
+	 * addButtons method will use a nested for loop to iterate through
+	 * the 2D array and add each button to the centerPanel.
+	 */
+	public void addButtons()
+	{	
+		for(int i = 0; i < boardButtons.length; i++)
+		{
+			for(int j = 0; j < boardButtons.length; j++)
+			{
+				centerPanel.add(boardButtons[i][j]);
+			}
+		}
+	}
+	
+	/**
+	 * showButtons method used to update the buttons once the last move is reached.
+	 * This method will iterate through the 2D array using a nested for loop and will 
+	 * disable all buttons as well as change its text to reveal if they were
+	 * a treasure or a miss.
+	 */
+	public static void showButtons()
+	{
+		for(int i = 0; i < 10; i++)
+		{
+			for(int j = 0; j < 10; j++)
+			{
+				//Method call will disable current button.
+				boardButtons[i][j].setEnabled(false);
+				
+				//Conditional loop that will set the text of each button depending
+				//on the name of each button.
+				//If the current button's name is "1" the button is a treasure.
+				//If the current button's name is "2" the button is a troll.
+				if(boardButtons[i][j].getName().equals("1"))
+					boardButtons[i][j].setText("$$$");
+				else if(boardButtons[i][j].getName().equals("2"))
+					boardButtons[i][j].setText("!!!");
+				else
+					boardButtons[i][j].setText("   ");
+				
+				//Adds the button to the centerPanel.
+				centerPanel.add(boardButtons[i][j]);
+			}
+		}
+	}
+	
+}
