@@ -1,0 +1,93 @@
+/**
+ * Contributor: 
+ * Alejandro Martinez, CSID: 5710018
+ * 
+ * Sources:
+ * Starting Out with Java, 6th edition, T, Gaddis
+ * http://MyProgrammingLab.com: Starting Out with Java, 6th edition
+ * 
+ * Version: 1.2
+ * 
+ *  ---CRC---
+ *  Responsibility:
+ *   -Will create a frame with panels that will hold all the game content.
+ *  Collaboration:
+ *   -extends JFrame
+ *  
+ *  Responsibility:
+ *   -Responsible for accessing settings to display correct values in the infoPanel.
+ *  Collaboration:
+ *   -GameSettings class
+ *   
+ *  Responsibility:
+ *   -Display center game panel.
+ *  Collaboration:
+ *   -CenterGamePanel class.
+ *   
+ *  Responsibility:
+ *   -Display title panel.
+ *  Collaboration:
+ *   -TitlePanel class.
+ *   
+ *  Responsibility:
+ *   -Display information panel.
+ *  Collaboration:
+ *   -InfoPanel class.
+ *  
+ */
+import java.awt.BorderLayout;
+import javax.swing.JFrame;
+
+public class TreasureHuntViewer extends JFrame
+{
+	//Create instance of the GameSettings class to access the settings of the game.
+	GameSettings myGameSettings = new GameSettings();
+	
+	//Create instance of the CenterGamePanel class.
+	CenterGamePanel centerGamePanel = new CenterGamePanel();
+	
+	//Create instance of the TitlePanel class.
+	TitlePanel titlePanel;
+	
+	//Create instance of the InfoPanel class.
+	InfoPanel infoPanel = new InfoPanel();
+	
+	/**
+	 * Constructor will create the window to display the game.
+	 * It will also set the width and height values from the GameSettings class.
+	 */
+	public TreasureHuntViewer()
+	{
+		//Create instance of TitlePanel class.
+		titlePanel = new TitlePanel(myGameSettings.getTitle());
+		
+		//Set width and height values.
+		int width = myGameSettings.getWidth();
+		int height = myGameSettings.getHeight();
+		
+		//Create a JFrame window to display game.
+		setSize(width, height);
+		setTitle("Treasure Hunt Game");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
+		setResizable(false);
+		
+		//Create infoPanel and add labels.
+		infoPanel.createPanel();
+		
+		//Add the panels to the frame and specify in which are they'll be located with the
+		//Borderlayout class.
+		add(titlePanel, BorderLayout.NORTH);
+		add(centerGamePanel, BorderLayout.CENTER);
+		add(infoPanel, BorderLayout.SOUTH);
+		
+		//Set the visibility of the frame.
+		setVisible(true);
+	}
+	
+	public static void main(String[] args)
+	{
+		//Initialize an instance of the TreasureHunt class.
+		new TreasureHuntViewer();
+	}
+}
