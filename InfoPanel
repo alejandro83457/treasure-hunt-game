@@ -1,0 +1,175 @@
+/**
+ * Contributor: 
+ * Alejandro Martinez, CSID: 5710018
+ * 
+ * Sources:
+ * Starting Out with Java, 6th edition, T, Gaddis
+ * http://MyProgrammingLab.com: Starting Out with Java, 6th edition
+ * 
+ * Version: 1.2
+ * 
+ *  ---CRC---
+ *  Responsibility:
+ *   -Needs game settings to display correct info.
+ *  Collaboration:
+ *   -GameSettings class.
+ *   
+ *  Responsibility:
+ *   -Creates info panel that will hold all sort of info.
+ *  Collaboration:
+ *   -extends JPanel
+ *   
+ *  Responsibility:
+ *   -Updates the treasures left and treasures found.
+ *   -Updates the trolls left.
+ *   -Updates the last move.
+ */
+import javax.swing.*;
+
+public class InfoPanel extends JPanel
+{
+	//Initialize instance of GameSettings class.
+	static GameSettings gameSettings = new GameSettings();
+	
+	//Initialize instance of the JPanel class.
+	private JPanel infoPanel = new JPanel();
+	
+	//Create variables that will hold the treasures that are left, treasures that have
+	//been found, and the tries the user has left.
+	private static int treasuresLeft = gameSettings.getNumberOfTreasures();
+	private static int triesLeft = gameSettings.getNumberOfTries();
+	private static int treasuresFound = 0;
+	private static int trollsLeft = 20;
+	
+	//Initialize instance of the JLabel and JTextField class for the treasures
+	//left area.
+	private JLabel treasuresLeftLabel = new JLabel("Treasures Left:");
+	private static JTextField treasuresLeftTextField = new JTextField(Integer.toString(treasuresLeft));
+	
+	//Initialize instance of the JLabel and JTextField class for the treasures
+	//found area.
+	private JLabel treasuresFoundLabel = new JLabel("Treasures Found:");
+	private static JTextField treasuresFoundTextField = new JTextField(Integer.toString(treasuresFound));
+	
+	//Initialize instance of the JLabel and JTextField class for the trolls
+	//found area.
+	private JLabel trollsLeftLabel = new JLabel("Trolls Left:");
+	private static JTextField trollsLeftTextField = new JTextField(
+			Integer.toString(gameSettings.getNumberOfTrolls()));
+	
+	//Initialize instance of the JLabel and JTextField class for the tries 
+	//left area.
+	private JLabel triesLeftLabel = new JLabel("Tries Left: ");
+	private static JTextField triesLeftTextField = new JTextField(
+			Integer.toString(gameSettings.getNumberOfTries()));
+	
+	//Initialize instance of the JLabel and JTextField class for the last move
+	//area
+	private JLabel lastMoveLabel = new JLabel("Last move:");
+	private static JTextField lastMoveTextField = new JTextField("None");
+	
+	//String array that will hold the possible moves the lastMoveTextField can 
+	//contain.
+	private static String[] movesArray = {"Treasure", "Miss", "You Won", "You Lost", "Troll"};
+	
+	/**
+	 * createPanel method will create the infoPanel and add the "treasures left" label and text field, the "treasures found" label
+	 * and text field, the "tries left" label and text field, the "trolls left" label and text field, and the "last move" label and 
+	 * text field. It will also set all of the textfield added to read-only.
+	 * Then it will add the info panel to the content pane.
+	 */
+	public void createPanel()
+	{
+		treasuresLeftTextField.setEditable(false);
+		treasuresFoundTextField.setEditable(false);
+		triesLeftTextField.setEditable(false);
+		trollsLeftTextField.setEditable(false);
+		lastMoveTextField.setEditable(false);
+		
+		infoPanel.add(treasuresLeftLabel);
+		infoPanel.add(treasuresLeftTextField);
+		infoPanel.add(treasuresFoundLabel);
+		infoPanel.add(treasuresFoundTextField);
+		infoPanel.add(triesLeftLabel);
+		infoPanel.add(triesLeftTextField);
+		infoPanel.add(trollsLeftLabel);
+		infoPanel.add(trollsLeftTextField);
+		infoPanel.add(lastMoveLabel);
+		infoPanel.add(lastMoveTextField);
+		
+		add(infoPanel);
+	}
+	
+	/**
+	 * updateTriesLeft method will decrement the triesLeft variable on the 
+	 * method call and set the text field of the triesLeftTextField to 
+	 * the variable triesLeft.
+	 */
+	public static void updateTriesLeft()
+	{
+		triesLeft--;
+		triesLeftTextField.setText(Integer.toString(triesLeft));
+	}
+	
+	/**
+	 * getTriesLefft getter method that will return the variable triesLeft.
+	 * @return triesLeft variable that holds the tries that the user has left.
+	 */
+	public static int getTriesLeft()
+	{
+		return triesLeft;
+	}
+	
+	/**
+	 * updateTreasure method used to decrement the treasuresLeft variable
+	 * and augment the treasuresFound variable.
+	 * Then, method calls will display the variables on their respective
+	 * text fields.
+	 */
+	public static void updateTreasure()
+	{
+		treasuresLeft--;
+		treasuresFound++;
+		
+		//Integer class will be used to convert the integer variables
+		//to String variables.
+		treasuresLeftTextField.setText(Integer.toString(treasuresLeft));
+		treasuresFoundTextField.setText(Integer.toString(treasuresFound));
+	}
+	
+	/**
+	 * getTreasuresLeft getter method will return the variable treasuresLeft
+	 * @return treasuresLeft variable that holds the amount of treasures left
+	 * undiscovered.
+	 */
+	public static int getTreasuresLeft()
+	{
+		return treasuresLeft;
+	}
+	
+	/**
+	 * updateTrolls method will decrement the trollsLeft variable by one and also set the 
+	 * treasuresFound variable to 0.
+	 * It will then update both variables to their respective text fields.
+	 */
+	public static void updateTrolls()
+	{
+		trollsLeft--;
+		treasuresFound = 0;
+		
+		trollsLeftTextField.setText(Integer.toString(trollsLeft));
+		treasuresFoundTextField.setText(Integer.toString(treasuresFound));
+	}
+	
+	/**
+	 * updateMove method will set the lastMoveTextField to any of the four
+	 * string indices in the movesArray.
+	 * I decided to use an array to have easier access to the moves and update
+	 * the text fields that way.
+	 * @param move Variable that holds the index of the move that will be displayed.
+	 */
+	public static void updateMove(int move)
+	{
+		lastMoveTextField.setText(movesArray[move]);
+	}
+}
